@@ -1,0 +1,15 @@
+### INPUT FILE FOR (C) ROUTING PROGRAM -- order important ###
+FLOW_DIREC_FILE  /raid2/nijssen/forecast/proj/uswide/data/feather/params/rout/feather_125.flowdir
+VELOCITY_FILE    1.5
+DIFF_FILE        800
+XMASK_FILE       12500
+FRACTION_FILE    /raid2/nijssen/forecast/proj/uswide/data/feather/params/rout/feather_125.fract
+STATION_FILE     /raid2/nijssen/forecast/proj/uswide/data/feather/params/rout/feather_125.stnloc
+INPUT_FILE_PREC  4
+SPINUP_FILE_PATH /raid2/nijssen/forecast/proj/uswide/data/feather/results/curr_spinup/vic/daily/asc/fluxes_    
+SPINUP_DATES     2012 08 01 2012 10 14
+INPUT_FILE_PATH  /state/partition1/nijssen/forecast/uswide/data/feather/results/esp/esp.20121015.20041015/vic/daily/asc/fluxes_      
+INPUT_DATES      2012 10 15 2013 10 17
+OUT_FILE_PATH    /state/partition1/nijssen/forecast/uswide/data/feather/rout/esp/esp.20121015.20041015/vic/
+OUTPUT_DATES     2012 10 15 2013 10 17
+UNIT_HYD_FILE    /raid2/nijssen/forecast/proj/uswide/data/feather/params/rout/UH_ALL
