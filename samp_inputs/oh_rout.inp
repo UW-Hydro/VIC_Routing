@@ -1,0 +1,29 @@
+# INPUT FILE FOR THE OHIO BASIN.   
+# NAME OF FLOW DIRECTION FILE   
+/mnt/aww/ohio/route/rout_data/oh.flow   
+# NAME OF VELOCITY FILE   
+.false.   
+1.5   
+# NAME OF DIFF FILE   
+.false.   
+800   
+# NAME OF XMASK FILE   
+.true.   
+/mnt/aww/ohio/route/gen_mask/kanawha.xmask
+# NAME OF FRACTION FILE   
+.true.   
+/mnt/aww/ohio/route/rout_data/oh.fract
+# NAME OF STATION FILE   
+/mnt/aww/ohio/route/run/oh.stnloc.kanaw
+# PATH OF INPUT FILES AND PRECISION   
+/mnt/aww/ohio/vic_ohio/results/fluxes_   
+4   
+# PATH OF OUTPUT FILES   
+/mnt/aww/ohio/route/rout_out/kanaw/
+# YEAR AND MONTH OF VIC OUTPUT TO ROUTE & ROUTED OUTPUT TO WRITE
+1990 1 1996 12
+1990 1 1996 12
+# NAME OF UNIT HYDROGRAPH FILE   
+/mnt/aww/ohio/route/rout_data/oh.uh_all   
+
+
