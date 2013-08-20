@@ -1,0 +1,15 @@
+iMod              2
+nParIdx           1
+nSamples          500
+Obj_max           16.0  1.5
+Input_File        data/reservoir/32895.day
+Val_File          data/reservoir/obs_sacsma.dat
+Par_File          data/reservoir/parameter.in
+Par_Opt_File      output/par.out
+Obj_File          output/obj.out
+Ts_Out_File       output/ts.out
+Obj_Out_File      output/objout.out
+Trdoff_File       output/trdoff.out
+
+
+

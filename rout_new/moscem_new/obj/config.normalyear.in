@@ -1,0 +1,19 @@
+
+# MOSCEM configration generated Wed Jun 30 13:03:04 CEST 2004 
+
+#
+#    parameter settings
+#
+MOD_VER           = C
+MOD_DIR           = SAC_SMA
+MOD_ALGO          = SINGL
+IDUM              = -103
+NPAR              = 13
+NINPUT            = 9
+NFLUX             = 1
+NTSTEP1           = 365
+NTSTEP2           = 365
+HAS_MISSING_VALUE = NO
+MISSING_VALUE     = 
+OBJ_FUNC          = WAT
+LAMBDA            = 

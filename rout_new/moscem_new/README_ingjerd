@@ -1,0 +1,30 @@
+
+################################
+
+moscem/LoadData.c : Leser inn data (data_ptr->InputData) fra infile.txt og data_ptr->ValData fra valfile.txt
+infile.txt og valfile.txt ser akkurat like ut, så hvorfor to? bare for å gjøre livet enklere?
+
+moscem/ParameterInit: Leser inn informasjon om dam/reservoir (fra data/rescarfile.txt)
+
+CompObj kalles fra RunMoscem, brukes for å se på de initielle samplene
+OffMetro_singl og OffMetro_multi kalles fra RunMoscem, brukes i selve SCE løkken
+
+moscem/DriveModel.c (kalles fra CompObj.c og OffMetro_singl.c eller OffMetro_multi.c): Setter i gang modellkjoring via SAC_SMA/Model.c: 
+    model(xpar, input, out, 0, data_ptr->input_mean,rescar_ptr,&(*scalingfactor),&files);
+
+SAC_SMA/Model.c: 
+   Call to reservoir: 
+   reservoir(xpar,&obs,&output,flag,mean_streamflow,rescar_ptr,&(*scalingfactor),outfilename); 
+
+CompObj og OffMetro* kaller ObjFunc (etter kall til DriveModel), som regner ut objective functions
+
+
+Power production:
+P = H * Q * g * e
+P = power, MW
+H = head, m
+Q = discharge, m3s-1
+g = g, 9.81 m2s-1
+e = system efficiency (fraction), set to 0.85
+
+ 

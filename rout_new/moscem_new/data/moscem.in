@@ -1,0 +1,14 @@
+nOptPar           12
+nOptObj           1
+nSamples          500
+nComplex          10
+nMaxDraw          15000
+Par_Control_File  data/parameter.in
+Obj_Flag_File     data/obj.in
+Input_File        data/infile.txt
+Val_File          data/valfile.txt
+Res_Car_File      data/rescarfile.txt
+Obj_Out_File      output/obj.out
+Par_Out_File      output/par.out
+Cvg_Out_File      output/cvg.out
+Rout_Out_File     output/output.day

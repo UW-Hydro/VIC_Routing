@@ -1,0 +1,120 @@
+README, rout_new.c:
+compile: make
+
+
+You need to make links in the directory where you run the routing model to
+"run_moscem_hydro" and "run_moscem_hydro_leapyear" (moscem related files, are
+included in the moscem.tar file).
+
+
+All arcinfo-type input files must have the header included.
+############################################################
+Example, Routing input file (329.main):
+# 329 #
+BASIN_NUMBER    329
+FLOW_DIREC_FILE input/329.dir
+VELOCITY_FILE   1.5
+DIFF_FILE       800
+XMASK_FILE      input/329.xmask
+FRACTION_FILE   input/329.frac
+IRRIGATION      0
+ROUTED_FILE     input/329.irrb
+RESEROIVRS  1
+RESERVOIR_FILE  input/329.reservoirs.firstline
+STATION_FILE    input/329.sta
+FLUX_PATH       ../output/standard
+INPUT_FILE_PATH  ../output/daily.ascii/fluxes_
+INPUT_FILE_PREC 2
+DEMAND_FILE_PATH /mn/hox/hydro/ingjerd/global/data/dams/reservoir_data
+DEMAND          0
+OUT_FILE_PATH output/cru/baseline/old/stn_6_1/329.wb.reservoirs/
+WORK_PATH output/cru/baseline/old/stn_6_1/329.wb.reservoirs/
+NAT_PATH  output/cru/baseline/old/stn_6_1/329.wb/
+INPUT_DATES 1960 1 1990 12
+OUTPUT_DATES 1960 1 1990 12
+UNIT_HYD_FILE   input/uh.file
+
+
+Explanations:
+IRRIGATION: Set to 0
+ROUTED_FILE: Use a non-existing filename
+RESERVOIRS: Set to 0 for naturalized simulations, 1 when including reservoir operations
+RESERVOIR_FILE: includes info on capacity, height of dam etc. See below.
+FLUX_PATH: Where binary VIC simulation results are located. Used for finding
+reservoir evaporation (at the moment commented out of rout.c ! )
+INPUT_FILE_PATH: Daily ascii files, VIC results (see below for format)
+DEMAND_FILE_PATH: Not used in this version
+DEMAND: Set to 0
+OUT_FILE_PATH: Location of routed files.
+WORK_PATH: Set to the same as OUT_FILE_PATH 
+NAT_PATH: Location of routed files, naturalized conditions.
+
+You must first run the model for naturalized situation, and in this case
+OUT_FILE_PATH, WORK_PATH and NAT_PATH should be the location of the output
+files. When including reservoirs, set OUT_FILE_PATH and WORK_PATH to another
+directory, and NAT_PATH should point to the directory of the naturalized
+simulations.
+
+############################################################
+Station file:
+1 0 outle  6 49 -999 1
+NONE
+
+First line:
+Will be routed or not (1/0) 
+Routed file exists or not (1/0) 
+Station name (5 characters) 
+col (from left) 
+row (from bottom) 
+Area (not used)
+Type (1: Regular, 2: Dam, 3: Irrigated part of cell). STATION[i].type
+############################################################
+Example, .reservoirs-file: 
+
+col row lon lat id name  Year Capacity(1000m3) Area(1000m2) CatchArea(km2) InstCap(MW) AnnEnergy(GWh) IrrAreas(km2) Height(m) Purpose 
+
+9 2 11.25 59.75 0 Glomma3 1900 1613000 27000 0 1500 0 0 100 h
+
+h = hydropower
+############################################################
+Output:
+
+Column number 3 is outflow from the reservoir.
+
+############################################################
+Comparison to the fortran-version of the code:
+Changes 1: 
+  The routing input file has to be similar to the one above.
+  	I.e. list the input files in the same order, and keep 
+  	the structure as is.
+Changes 2: 
+  Two columns are added to the station information file. The second
+  	number on the line gives information on whether the station 
+  	is already routed (1). If so, it won't be routed again. 
+  	If you set the number to 0, the routing
+  	program assumes you want to rout the area again. 
+  	The right-most column tells the routing program what kind of cell we 
+  	are dealing with. 1: Regular cell (nonirrigated part), 2: Dam, 
+	3: Irrigated part of cell. 
+  NB! NB! NB!
+	You must list the stations from upstream to downstream locations!
+  NB! NB! NB!   
+        Be aware that this causes changes to the .uh_s file!!!!!
+Changes 3: For each routed station, a file called 'streamflow_lat_lon' is made.
+  It will be located in the 'Output_files' directory. Units m3/s, time step daily.
+Changes 4: The output is written to m3/s instead of ft3/s. :). 
+
+New feature 1: Skips days in VIC simulation files that won't be routed.
+  i.e. ndays is number of days to be routed, not number of days to 
+  be routed + number of simulation days before routing starts, which it used to be.
+  NB! This may result in less runoff at the beginning of the routing period (spin-up)!!!!
+New feature 2: Areas already routed won't be routed again. I.e. if an upstream 
+  station location has been routed during this run, or previously (see 'changes 2').
+
+Stupid 1: If you want to do the routing at a location upstream other gauges, 
+ you have to make sure the 'Already routed' column is set to 0 at the downstream 
+ location........ 
+Stupid 2: The VIC simulation flux files have to be ascii files with the 
+ following columns:
+ Year Month Day Runoff Baseflow
+#################################################################

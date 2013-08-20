@@ -1,0 +1,29 @@
+########################################################
+Read me file
+Yuqiong Liu   March 2003
+
+Note: refer to MOSCEM.readme.pdf for details
+########################################################
+
+1. Uncompress and untar the files
+
+        gunzip -c moscem.0.tar.gz | tar xvf -
+
+2. Make your model directory
+
+Make a new sub-directory in the root directory and copy your model
+source files to this new directory; make necessary modifications in 
+your model source code to couple your model with MOSCEM.
+
+3. Run the script file “configur.” in the root directory to make configurations.
+
+4. Use "gmake" to generate the executable "run_moscem"
+
+5. Prepare the input data files
+	1) data/moscem.in
+	2) parameter.in and objoptflag.in
+	3) input and output data
+	
+6. Run MOSCEM ("run_moscem")
+
+7. Check output files and do post-processing
