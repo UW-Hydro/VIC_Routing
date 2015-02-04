@@ -73,9 +73,6 @@ c     find the revised cooordinates
          ILOC=XC + (ICOL-II)*SIZE + SIZE/2.0
          JLOC=YC + JJ*SIZE - SIZE/2.0
 
-C        CONVERSIONFACTOR for mm/day to ft**3/sec         <--?????
-
-
          AREA =  RERD**2*ABS(SIZE)*PI/180*             !give area of box in 
      &        ABS(SIN((JLOC-SIZE/2.0)*PI/180)-         !square meters
      $        SIN((JLOC+SIZE/2.0)*PI/180))
@@ -85,8 +82,9 @@ C        CONVERSIONFACTOR for mm/day to ft**3/sec         <--?????
 
 c         WRITE(*,*) N, ILOC, JLOC
 
-         FACTOR = FRACTION(II,JJ)*35.315*AREA/(86400.0*1000.0)  !convert to sq.mi.
-                                                                !&mult. by cell fract
+c        convert from mm/day to ft^3/s and multiply by fraction
+         FACTOR = FRACTION(II,JJ)*35.315*AREA/(86400.0*1000.0)
+
          FACTOR_SUM = FACTOR_SUM + FACTOR
 
          
