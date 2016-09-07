@@ -30,10 +30,10 @@ c     RCS ID STRING
                   IF (POT .GT. 69.0) THEN
                      H = 0.0
                      ELSE
-                     H = 1.0/(2.0*SQRT(PI*DIFF(I,J))) * 
+                     H = 1.0/(2.0*SQRT(PI*DIFF(I,J))) *
      &                   XMASK(I,J)/(T**1.5) * EXP(-POT)
                   END IF
-               ELSE 
+               ELSE
                   H = 0.0
                END IF
                UH(I,J,K) = H
@@ -54,14 +54,14 @@ c     RCS ID STRING
             END IF
          END DO
       END DO
- 
+
       RETURN
       END
 
-c     Solve for 
+c     Solve for
       SUBROUTINE MAKE_GRID_UH
      & (DIREC, NOB, UH_DAY, TMAX, PI, PJ, LE, UH_DAILY, KE,
-     &  CATCHIJ, UHM, FR, PMAX, NCOL, NROW, UH_BOX, 
+     &  CATCHIJ, UHM, FR, PMAX, NCOL, NROW, UH_BOX,
      &  UH_S, UH_STRING, NAME5)
 
       IMPLICIT NONE
@@ -80,13 +80,13 @@ c     Solve for
 
       CHARACTER*80 UH_STRING       !new, AW
       CHARACTER*5  NAME5
-         
+
       IF (UH_STRING(1:4) .ne. 'NONE') THEN       ! read UH_S grid, not make it
         print*, 'reading UH_S grid from file'
-        open(98, file=UH_STRING, status='old')   
+        open(98, file=UH_STRING, status='old')
         DO N = 1,NOB
           READ(98, *) (UH_S(N,K), K = 1,KE+UH_DAY-1)
-        END DO        
+        END DO
 
       ELSE				         ! make UH_S grid, and save it
         print*, 'making UH_S grid...it takes a while...'
@@ -96,7 +96,7 @@ c     Solve for
         print*, '       save this file and specify it in your station'
         print*, '       location file to avoid this step in the future'
 
-        open(98, file = NAME5//'.uh_s', status='new')     
+        open(98, file = NAME5//'.uh_s', status='new')
 
         DO N = 1, NOB
           print*, 'grid cell', N,' out of', NOB
@@ -120,7 +120,7 @@ c     Solve for
             DO T = 1, TMAX
               DO L = 1, LE
                  IF ((T-L) .GT. 0) THEN
-                   FR(T,2) = FR(T,2) + FR(T-L,1)*UHM(I,J,L) 
+                   FR(T,2) = FR(T,2) + FR(T-L,1)*UHM(I,J,L)
                  END IF
                END DO
             END DO
@@ -152,7 +152,7 @@ c     Solve for
         DO N = 1,NOB
           DO K = 1,KE
             DO U =1,UH_DAY
-              UH_S(N,K+U-1) = UH_S(N,K+U-1) + 
+              UH_S(N,K+U-1) = UH_S(N,K+U-1) +
      &                         UH_BOX(N,K) * UH_DAILY(N,U)
             END DO
           END DO
@@ -170,14 +170,10 @@ c  write out the grid for future reference...
 
         DO N = 1,NOB
           WRITE(98, *) (UH_S(N,K), K = 1,KE+UH_DAY-1)
-        END DO        
+        END DO
 
-      END IF 
+      END IF
       close(98)
 
       RETURN
       END
-
-
-
-
