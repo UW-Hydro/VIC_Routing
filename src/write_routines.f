@@ -8,10 +8,6 @@ c
 
       IMPLICIT NONE
 
-c     RCS ID STRING
-      CHARACTER*50 RCSID
-      DATA RCSID/"$Id: write_routines.f,v 1.1 2005/04/07 05:07:29 vicadmin Exp $"/
-
       INTEGER DAYS
       REAL    FLOW(DAYS)
       INTEGER IDAY(DAYS), IMONTH(DAYS), IYEAR(DAYS)
@@ -19,7 +15,7 @@ c     RCS ID STRING
       CHARACTER*5 NAME5
       REAL    FACTOR_SUM
       CHARACTER*72 OUTPATH
-      
+
       CLEN = INDEX(OUTPATH,' ')-1
 
       OPEN(30, FILE = OUTPATH(1:CLEN)//NAME5//'.day')
@@ -34,17 +30,17 @@ c     RCS ID STRING
       END
 
       SUBROUTINE WRITE_MONTH
-     & (DAYS_IN_MONTH,START_YEAR, STOP_YEAR, FIRST_YEAR, LAST_YEAR, 
+     & (DAYS_IN_MONTH,START_YEAR, STOP_YEAR, FIRST_YEAR, LAST_YEAR,
      &  START_MO, STOP_MO, FIRST_MO, LAST_MO,
-     &  NAME5, DAYS, FLOW, FACTOR_SUM, MONTHLY, MONTHLY_mm, 
+     &  NAME5, DAYS, FLOW, FACTOR_SUM, MONTHLY, MONTHLY_mm,
      &  YEARLY, YEARLY_mm,OUTPATH,NDAY,IMONTH,IYEAR,MO,YR,NMONTHS,NYR)
 
       IMPLICIT NONE
 
       INTEGER DAYS_IN_MONTH(12)
       INTEGER NYR
-      INTEGER START_YEAR, STOP_YEAR, FIRST_YEAR, LAST_YEAR 
-      INTEGER START_MO, STOP_MO, FIRST_MO, LAST_MO   !AWW-092700 
+      INTEGER START_YEAR, STOP_YEAR, FIRST_YEAR, LAST_YEAR
+      INTEGER START_MO, STOP_MO, FIRST_MO, LAST_MO   !AWW-092700
       INTEGER DAYS,NDAY,NMONTHS
       INTEGER IMONTH(DAYS),IYEAR(DAYS)
       INTEGER SKIPTO, STOPAT
@@ -79,7 +75,7 @@ c     iniitalize monthly averages
          MONTHLY(I) = 0.0
          MONTHLY_mm(I) = 0.0
       END DO
-      
+
 c     Average flows for each month in simulation
       M=1
       OLDMO=MO(1)
@@ -107,7 +103,7 @@ c     Note array starts at 1 regardless of actual month number
          WRITE(40,*) YR(I),MO(I), MONTHLY(I)
          WRITE(41,*) YR(I),MO(I), MONTHLY_mm(I)
          YEARLY(MOD(I-1,12)+1) = YEARLY(MOD(I-1,12)+1) + MONTHLY(I)
-         YEARLY_mm(MOD(I-1,12)+1) = 
+         YEARLY_mm(MOD(I-1,12)+1) =
      &      YEARLY_mm(MOD(I-1,12)+1) + MONTHLY_mm(I)
          MCOUNT(MO(I)) = MCOUNT(MO(I))+1
       END DO

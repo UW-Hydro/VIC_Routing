@@ -8,10 +8,6 @@ c     using equation (15) from Lohmann, et al. (1996)  Tellus article
       SUBROUTINE MAKE_UHM(UH,VELO,DIFF,XMASK,NCOL,NROW,LE,DT,
      $        IROW,ICOL)
 
-c     RCS ID STRING
-      CHARACTER*50 RCSID
-      DATA RCSID/"$Id: unit_hyd_routines.f,v 1.1 2005/04/07 05:07:29 vicadmin Exp $"/
-
       REAL    UH(NCOL,NROW,LE), INTE
       INTEGER I, J, K, LE
       REAL    T, DT, POT, VELO(NCOL,NROW), DIFF(NCOL,NROW)

@@ -9,22 +9,18 @@ c     Code maintained by G. O'Donnell (tempgd@hydro.washington.edu)
 c     See WA Hydrology Homepage for operational details.
 
 c     Modified 5/99 to read in the uh_s array if it has already
-c     been generated in a previous run. 
+c     been generated in a previous run.
 
 c     Modified 2/2001 by edm to include month and year in output
 c     and also check dates in VIC output files and calculate NDAYS
 c
       IMPLICIT NONE
 
-c     RCS ID STRING
-      CHARACTER*50 RCSID
-      DATA RCSID/"$Id: rout.f,v 1.1 2005/04/07 05:07:29 vicadmin Exp $"/
-
       integer IARGC
 
       integer isaleap
       external isaleap
- 
+
 c     change dimensions here
 c     nrow and ncol should be larger than the grid
 c     nyr should equal run length yrs+1
@@ -42,9 +38,9 @@ c     no changes after here
       PARAMETER (UH_DAY = 96  )
       PARAMETER (TMAX = UH_DAY*24)
       PARAMETER (PMAX = 10000   )
-      
+
       INTEGER DIREC(NCOL,NROW,2)
-      REAL    VELO(NCOL,NROW), DIFF(NCOL,NROW) 
+      REAL    VELO(NCOL,NROW), DIFF(NCOL,NROW)
       REAL    XMASK(NCOL,NROW), FRACTION(NCOL,NROW)
       REAL    UH_BOX(PMAX,KE), UHM(NCOL,NROW,LE)
       REAL    UH_S(PMAX,KE+UH_DAY-1)
@@ -55,11 +51,11 @@ c     no changes after here
       INTEGER NO_OF_BOX
       INTEGER CATCHIJ(PMAX,2)
       INTEGER H(NCOL,NROW)
-      
+
       INTEGER PI, PJ
       REAL    UH_DAILY(PMAX,UH_DAY)
       REAL    FR(TMAX,2)
-      
+
       INTEGER NR
       INTEGER IROW, ICOL
       INTEGER LP,M,Y
@@ -174,7 +170,7 @@ c     calculate number of days & months in simulation
       DO J=START_MO,12*(STOP_YEAR-START_YEAR)+STOP_MO
         IF(M.EQ.2) THEN
            LP=isaleap(Y)
-        ELSE 
+        ELSE
            LP=0
         ENDIF
         NDAY = NDAY+DAYS_IN_MONTH(M)+LP
@@ -205,11 +201,11 @@ C***********************************************************
 C     Loop over required stations
 
  100  CONTINUE
-      READ(10,*,END=110) 
+      READ(10,*,END=110)
      &     NR, NAME, PI, PJ, AREA
       READ(10,'(A80)',END=110) UH_STRING   !new, AW:  uh_string
       IF (NR .EQ. 1) THEN
-         WRITE(*,'(I2,2X,A,I4,I4,G12.6)') 
+         WRITE(*,'(I2,2X,A,I4,I4,G12.6)')
      &        NR, NAME, PI, PJ
          PRINT*, 'Routing station: ', NAME
 c     note, the arrays are flipped left to right
@@ -220,7 +216,7 @@ c     note, the arrays are flipped left to right
          CALL SEARCH_CATCHMENT
      &        (PI,PJ,DIREC,NCOL,NROW,
      &        NO_OF_BOX,CATCHIJ,PMAX,IROW,ICOL)
-         
+
       print*, 'reading grid_UH...'
          CALL READ_GRID_UH
      &        (UH_BOX, KE, PMAX, NO_OF_BOX, CATCHIJ,FILENAME)
@@ -237,25 +233,25 @@ c     note, the arrays are flipped left to right
      &        CATCHIJ, BASE, RUNO, FLOW, KE, UH_DAY, UH_S, FRACTION,
      &        FACTOR_SUM,XC,YC,SIZE,DPREC,INPATH,ICOL,NDAY,
      &        IDAY,IMONTH,IYEAR, MO, YR, NYR)
- 
+
       print*, 'writing data...'
          CALL WRITE_DATA
-     &        (FLOW, NDAY, NAME5, FACTOR_SUM, OUTPATH,IDAY,IMONTH,IYEAR) 
+     &        (FLOW, NDAY, NAME5, FACTOR_SUM, OUTPATH,IDAY,IMONTH,IYEAR)
 
          CALL WRITE_MONTH
-     &     (DAYS_IN_MONTH,START_YEAR, STOP_YEAR, FIRST_YEAR, 
-     &     LAST_YEAR, START_MO, STOP_MO, FIRST_MO, 
+     &     (DAYS_IN_MONTH,START_YEAR, STOP_YEAR, FIRST_YEAR,
+     &     LAST_YEAR, START_MO, STOP_MO, FIRST_MO,
      &     LAST_MO,
-     &     NAME5, DAYS, FLOW, FACTOR_SUM, MONTHLY, MONTHLY_mm, 
+     &     NAME5, DAYS, FLOW, FACTOR_SUM, MONTHLY, MONTHLY_mm,
      &     YEARLY,YEARLY_mm,OUTPATH,NDAY,IMONTH,IYEAR,MO,YR,NMONTHS,NYR)
 
 
       END IF
       GOTO 100
  110  CONTINUE
-      
+
       STOP
- 9001 WRITE(*,*) 'CANNOT OPEN: ', FILE_INPUT 
+ 9001 WRITE(*,*) 'CANNOT OPEN: ', FILE_INPUT
       END
 c     ***********************************************
 c     FUNCTION  ISALEAP
