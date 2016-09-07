@@ -21,16 +21,11 @@ c     using equation (15) from Lohmann, et al. (1996)  Tellus article
             DO K = 1,LE
                T = T + DT
                IF (VELO(I,J) .GT. 0.0) THEN
-                  POT = ((VELO(I,J)*T-XMASK(I,J))**2.0)/
-     &                  (4.0*DIFF(I,J)*T)
-                  IF (POT .GT. 69.0) THEN
-                     H = 0.0
-                     ELSE
-                     H = 1.0/(2.0*SQRT(PI*DIFF(I,J))) *
+                   POT = ((VELO(I,J)*T-XMASK(I,J))**2.0)/(4.0*DIFF(I,J)*T)
+                   H = 1.0/(2.0*SQRT(PI*DIFF(I,J))) *
      &                   XMASK(I,J)/(T**1.5) * EXP(-POT)
-                  END IF
                ELSE
-                  H = 0.0
+                   H = 0.0
                END IF
                UH(I,J,K) = H
             END DO
@@ -115,8 +110,8 @@ c     Solve for
           IF ((I .NE. PI) .OR. (J .NE. PJ)) THEN
             DO T = 1, TMAX
               DO L = 1, LE
-                 IF ((T-L) .GT. 0) THEN
-                   FR(T,2) = FR(T,2) + FR(T-L,1)*UHM(I,J,L)
+                 IF ((T-L) .GE. 0) THEN
+                   FR(T,2) = FR(T,2) + FR(T-L+1,1)*UHM(I,J,L)
                  END IF
                END DO
             END DO

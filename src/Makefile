@@ -20,7 +20,7 @@ FFLAGS = -O -C -ffixed-line-length-none
 #for debugging
 #FFLAGS = -C -g -lm -ffixed-line-length-none
 
-FC=g77
+FC=gfortran
 
 HFILES=    	parameter.h
 
