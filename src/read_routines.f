@@ -1,4 +1,4 @@
-c SUBROUTINES RELATED TO READING 
+c SUBROUTINES RELATED TO READING
 c read_diff()
 c read_fraction()
 c read_grid_uh()
@@ -9,10 +9,6 @@ c
 
       SUBROUTINE READ_DIFF(DIFF,NCOL,NROW,FILENAME,
      $ IROW, ICOL)
-
-c     RCS ID STRING
-      CHARACTER*50 RCSID
-      DATA RCSID/"$Id: read_routines.f,v 1.1 2005/04/07 05:07:28 vicadmin Exp $"/
 
       INTEGER NCOL,NROW,IROW,ICOL,I,J
       REAL DIFF(NCOL,NROW)
@@ -26,8 +22,8 @@ c     RCS ID STRING
       END DO
 
       DO J = IROW,1,-1
-         READ(10,*) (DIFF(I,J), I=ICOL,1,-1) 
-      END DO      
+         READ(10,*) (DIFF(I,J), I=ICOL,1,-1)
+      END DO
 
       CLOSE(10)
 
@@ -54,8 +50,8 @@ c      PRINT*, 'HARDCODED FRACTION FILE'
       END DO
 
       DO J = IROW,1,-1
-         READ(22,*) (FRACTION(I,J), I=ICOL,1,-1) 
-      END DO      
+         READ(22,*) (FRACTION(I,J), I=ICOL,1,-1)
+      END DO
 
       CLOSE(22)
 
@@ -69,7 +65,7 @@ c      PRINT*, 'HARDCODED FRACTION FILE'
       SUBROUTINE READ_GRID_UH
      &    (UH_BOX, KE, PMAX, NOB, CATCHIJ,FILENAME)
 
-     
+
       IMPLICIT NONE
 
       INTEGER KE, PMAX, NOB
@@ -105,8 +101,8 @@ c      PRINT*, 'HARDCODED FRACTION FILE'
       END DO
 
       DO J = IROW,1,-1
-         READ(10,*) (VELO(I,J), I=ICOL,1,-1) 
-      END DO      
+         READ(10,*) (VELO(I,J), I=ICOL,1,-1)
+      END DO
 
       CLOSE(10)
 
@@ -133,8 +129,8 @@ c      PRINT*, 'HARDCODED FRACTION FILE'
       END DO
 
       DO J = IROW,1,-1
-         READ(10,*, END=20) (XMASK(I,J), I=ICOL,1,-1) 
-      END DO      
+         READ(10,*, END=20) (XMASK(I,J), I=ICOL,1,-1)
+      END DO
       CLOSE(10)
 
       RETURN
@@ -153,11 +149,11 @@ c  reads the flow direction file.
       IMPLICIT NONE
 
       INTEGER NCOL,NROW,I,J,IROW,ICOL,IMISS
-      INTEGER DIREC(NCOL,NROW,2) 
+      INTEGER DIREC(NCOL,NROW,2)
       INTEGER H(NCOL,NROW)
       REAL XC, YC, SIZE
       CHARACTER*72 FILENAME
-      CHARACTER*14 CDUM 
+      CHARACTER*14 CDUM
 
       OPEN(10, FILE = FILENAME, FORM = 'FORMATTED',
      $     STATUS='OLD',ERR=9001)
@@ -174,10 +170,10 @@ c  reads the flow direction file.
      $        irow, icol
          STOP
       ENDIF
-      
+
       DO J = IROW,1,-1
-         READ(10,*) (H(I,J), I=ICOL,1,-1) 
-      END DO      
+         READ(10,*) (H(I,J), I=ICOL,1,-1)
+      END DO
       CLOSE(10)
 
       DO I = 1, ICOL
@@ -194,7 +190,7 @@ c  reads the flow direction file.
             ELSE IF (H(I,J) .EQ. 3) THEN
                DIREC(I,J,1) = I-1
                DIREC(I,J,2) = J
-            ELSE IF (H(I,J) .EQ. 4) THEN 
+            ELSE IF (H(I,J) .EQ. 4) THEN
                DIREC(I,J,1) = I-1
                DIREC(I,J,2) = J-1
             ELSE IF (H(I,J) .EQ. 5) THEN
@@ -217,4 +213,3 @@ c  reads the flow direction file.
      $  FILENAME
       STOP
       END
-

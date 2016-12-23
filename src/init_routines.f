@@ -10,10 +10,6 @@ C     Initialiase float array A to VALUE
 
       IMPLICIT NONE
 
-c     RCS ID STRING
-      CHARACTER*50 RCSID
-      DATA RCSID/"$Id: init_routines.f,v 1.1 2005/04/07 05:07:28 vicadmin Exp $"/
-
       INTEGER NCOL, NROW
       INTEGER I, J
       REAL A(NCOL,NROW)
@@ -65,7 +61,7 @@ c     filenames allowed a maximum of 5 decimal places
       END DO
 
       CLEN=CLEN-1
-      
+
       RETURN
       END
 
@@ -95,27 +91,27 @@ c            print*, i, j, no_of_box
             II = I
             JJ = J
  300        CONTINUE
-            IF ((II .GT. ICOL) .OR. (II .LT.1) .OR. 
+            IF ((II .GT. ICOL) .OR. (II .LT.1) .OR.
      &          (JJ .GT. IROW) .OR. (JJ .LT.1)) THEN
                GOTO 310
             END IF
-            IF ((II .EQ. PI) .AND. (JJ .EQ. PJ)) THEN 
+            IF ((II .EQ. PI) .AND. (JJ .EQ. PJ)) THEN
                NO_OF_BOX = NO_OF_BOX + 1
                CATCHIJ(NO_OF_BOX,1) = I
                CATCHIJ(NO_OF_BOX,2) = J
                GOTO 310
-            ELSE 
-               IF ((DIREC(II,JJ,1).NE.0) .AND.    !check if the current 
+            ELSE
+               IF ((DIREC(II,JJ,1).NE.0) .AND.    !check if the current
      &             (DIREC(II,JJ,2) .NE.0)) THEN   !ii,jj cell routes down
                      III = DIREC(II,JJ,1)         !to the subbasin outlet
-                     JJJ = DIREC(II,JJ,2)         !point, following the 
+                     JJJ = DIREC(II,JJ,2)         !point, following the
                      II  = III                    !direction of direc(,)
                      JJ  = JJJ                    !from each cell
                      GOTO 300
-               END IF   			  !if you get there, 
+               END IF   			  !if you get there,
             END IF                                !no_of_box increments
  310        CONTINUE                              !and you try another
-         END DO                                   !cell.  
+         END DO                                   !cell.
       END DO
 
       WRITE(*,*) 'Number of grid cells upstream of present station',

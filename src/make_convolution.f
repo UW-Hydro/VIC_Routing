@@ -1,22 +1,18 @@
 
       SUBROUTINE MAKE_CONVOLUTION
-     & (NCOL, NROW, NOB, PMAX, DAYS, CATCHIJ, 
+     & (NCOL, NROW, NOB, PMAX, DAYS, CATCHIJ,
      &  BASE, RUNO, FLOW, KE, UH_DAY, UH_S, FRACTION, FACTOR_SUM,
      &  XC, YC, SIZE, DPREC, INPATH,ICOL,NDAY,IDAY,IMONTH,IYEAR,
      &  MO, YR, NYR)
 
       IMPLICIT NONE
 
-c     RCS ID STRING
-      CHARACTER*50 RCSID
-      DATA RCSID/"$Id: make_convolution.f,v 1.1 2005/04/07 05:07:28 vicadmin Exp $"/
-
       INTEGER     N, I, J, DAYS, NDAY, II, JJ  
       INTEGER     NCOL,NROW,ICOL,NOB,PMAX,KE,UH_DAY
       INTEGER     CATCHIJ(PMAX,2)
       INTEGER     NYR
       REAL        UH_S(PMAX,KE+UH_DAY-1)
-      REAL        BASE(DAYS), RUNO(DAYS), FLOW(DAYS) 
+      REAL        BASE(DAYS), RUNO(DAYS), FLOW(DAYS)
       REAL        FRACTION(NCOL,NROW)
 
       REAL        PI, RERD, FACTOR, FACTOR_SUM
@@ -36,7 +32,7 @@ c     RCS ID STRING
 
       REAL        STORAGE, K_CONST
       REAL        DUM1,DUM2
-  
+
       INTEGER     IDAY(DAYS), IMONTH(DAYS), IYEAR(DAYS)
       INTEGER MO(12*NYR),YR(12*NYR)
       INTEGER MISS_NUM
@@ -44,9 +40,9 @@ C     MISS_NUM is the number of grid cell output files not found
 
       MISS_NUM=0
 
-C     *** 0 <= K_CONST = 1.0 
+C     *** 0 <= K_CONST = 1.0
 C *** K_CONST smaller 1.0 makes it a simple linear storage
-    
+
       K_CONST = 1.0
 
       PI = ATAN(1.0) * 4.0
@@ -66,18 +62,18 @@ C *** K_CONST smaller 1.0 makes it a simple linear storage
          END DO
          II = CATCHIJ(N,1)
          JJ = CATCHIJ(N,2)
-         
+
 c     the grid has been flipped left to right
 c     find the revised cooordinates
 
          ILOC=XC + (ICOL-II)*SIZE + SIZE/2.0
          JLOC=YC + JJ*SIZE - SIZE/2.0
 
-         AREA =  RERD**2*ABS(SIZE)*PI/180*             !give area of box in 
+         AREA =  RERD**2*ABS(SIZE)*PI/180*             !give area of box in
      &        ABS(SIN((JLOC-SIZE/2.0)*PI/180)-         !square meters
      $        SIN((JLOC+SIZE/2.0)*PI/180))
 
-         
+
          AREA_SUM = AREA_SUM + AREA
 
 c         WRITE(*,*) N, ILOC, JLOC
@@ -87,7 +83,7 @@ c        convert from mm/day to ft^3/s and multiply by fraction
 
          FACTOR_SUM = FACTOR_SUM + FACTOR
 
-         
+
          call create_vic_names(jloc,iloc,loc,clen,dprec)
 
 c     print*, INPATH(1:INDEX(INPATH,' ')-1)//LOC(1:CLEN)

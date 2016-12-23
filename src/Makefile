@@ -1,5 +1,5 @@
 ########################################################################
-### rout.f makefile #################################################### 
+### rout.f makefile ####################################################
 ########################################################################
 #
 # Routing algorithm written D. Lohmann
@@ -7,8 +7,6 @@
 # This is a slightly modified code (main algotrithms unchanged -IO and
 # array dimensions simplified).
 # Maintained by G. O'Donnell (tempgd@hydro.washington.edu) and Andy Wood
-# 
-# $Id: Makefile,v 1.1 2005/04/07 05:07:28 vicadmin Exp $
 #
 
 #This program uses the non-standard Fortran argument GETARG
@@ -22,7 +20,7 @@ FFLAGS = -O -C -ffixed-line-length-none
 #for debugging
 #FFLAGS = -C -g -lm -ffixed-line-length-none
 
-FC=g77
+FC=gfortran
 
 HFILES=    	parameter.h
 
